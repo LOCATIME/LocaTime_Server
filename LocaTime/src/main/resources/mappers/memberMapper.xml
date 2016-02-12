@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="kr.co.locatime.mapper.MemberMapper">
+ 	
+ 	<insert id="insertMember">
+ 	INSERT INTO user_table(user_id,user_phone,user_pw,user_name,user_kakao)
+	VALUES (#{user_id},#{user_phone},#{user_pw},#{user_name},#{user_kakao})	
+ 	</insert>
+	
+	<select id="login" resultType="int">
+	SELECT 
+		count(user_id) 
+	FROM 
+		user_table
+	WHERE user_id=#{user_id}
+	AND   user_pw=#{user_pw}
+	</select>
+	
+	<select id="myPage" resultType="MemberVO">
+	SELECT 
+		user_id,user_name,user_phone,user_kakao 
+	FROM 
+		user_table
+	WHERE 
+		user_id=#{user_id}
+	</select>
+	
+	<update id="updateMember">
+	UPDATE
+		user_table
+	SET
+			user_phone=#{user_phone}
+		,
+			user_kakao=#{user_kakao}
+		,
+			user_pw=#{user_pw}
+	WHERE
+		user_id=#{user_id}
+	</update>
+	
+	<select id="idCheck" resultType="int">
+	SELECT 
+		count(user_id) 
+	FROM 
+		user_table
+	WHERE user_id=#{user_id}
+	</select>
+	
+	
+ </mapper>

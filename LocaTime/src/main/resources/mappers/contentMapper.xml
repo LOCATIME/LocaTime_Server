@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="kr.co.locatime.mapper.ContentMapper">
+ 
+ 	<insert id="insertContent">
+ 	INSERT INTO content
+ 	(content_title,content_OriPrice,content_deadline,content_SellingPrice,content_able,user_id)
+	VALUES(#{content_title},#{content_OriPrice},#{content_deadline},#{content_SellingPrice},#{content_able},#{user_id});
+ 	</insert>
+ 	
+ 	<select id="contentAll"  resultType="ContentVO">
+ 	SELECT 
+ 		c.content_title,c.content_OriPrice,
+ 		c.content_SellingPrice,c.content_able,
+ 		c.content_deadline,u.user_kakao
+	FROM 
+		user_table u, content c
+	WHERE 
+			u.user_id=c.user_id
+		AND 
+			c.content_able=0
+	ORDER BY 
+			content_deadline asc
+ 	</select> 
+ 	
+ 	<select id="contentAllPrice"  resultType="ContentVO">
+ 	SELECT 
+ 		c.content_title,c.content_OriPrice,
+ 		c.content_SellingPrice,c.content_able,
+ 		c.content_deadline,u.user_kakao
+	FROM 
+		user_table u, content c
+	WHERE 
+			u.user_id=c.user_id
+		AND 
+			c.content_able=0
+	ORDER BY 
+			content_SellingPrice asc
+ 	</select>
+ 	
+ 	<select id="contentAll_user"  resultType="ContentVO">
+ 	SELECT 
+ 		c.content_title,c.content_OriPrice,
+ 		c.content_SellingPrice,c.content_able,
+ 		c.content_deadline,c.user_id,
+ 		c.content_num, u.user_kakao
+	FROM 
+		content c,user_table u
+	WHERE 
+			c.user_id=#{user_id}
+		AND
+			c.user_id=u.user_id
+ 	</select>
+ 	
+ 	<update id="updateAble" >
+ 	UPDATE
+ 		content
+ 	SET 
+ 		content_able=#{content_able}
+ 	WHERE
+			content_num=#{content_num}
+ 	</update>
+ 	
+ 	
+</mapper>
